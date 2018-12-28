@@ -49,6 +49,28 @@ for file in project_files:
             if(not (split_file_contents[-1] == "" and ((char == "=" and file_contents[char_index-1] == "<") or (char == ">" and file_contents[char_index-1] == "=")))):
                 split_file_contents[-1] += char
 
+    # Loop through embedded Python code
+    for embedded_code_index in range(len(split_file_contents)):
+        if(embedded_code_index%2 == 1):
+            embedded_code = split_file_contents[embedded_code_index]
+
+            global executed_embedded_code
+            executed_embedded_code = ""
+
+            def display(text):
+                global executed_embedded_code
+                if (executed_embedded_code != ""):
+                    executed_embedded_code += "\n"
+                executed_embedded_code += str(text)
+
+            exec(embedded_code)
+
+            split_file_contents[embedded_code_index] = executed_embedded_code
+
+            del executed_embedded_code
+
+    print ''.join(split_file_contents)
+
 # === Just some code I'm saving for later :) ===
 # printVal = ""
 # def display(text):

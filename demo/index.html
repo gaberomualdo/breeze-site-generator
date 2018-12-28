@@ -4,9 +4,23 @@
 	<title></title>
 </head>
 <body>
+<h1>Just numbers 0 - 10 :)</h1>
 <=
-for i in range(100):
-	print(i)
+for i in range(10):
+	display(i)
+=>
+
+<h1>Just a bunch of primes</h1>
+<=
+def is_prime(n):
+	is_prime = True
+	for i in range(2,n):
+		if(n%i==0):
+			is_prime = False
+	return is_prime
+for number in range(50):
+	if(is_prime(number)):
+		display(number)
 =>
 </body>
 </html>
