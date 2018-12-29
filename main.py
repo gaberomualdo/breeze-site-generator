@@ -7,6 +7,10 @@
 import sys
 import os
 import shutil
+import datetime
+
+# Print info to command line
+print("\nSite compiling started: " + str(datetime.datetime.now()))
 
 # Get project directory file using command line argument
 try:
@@ -103,4 +107,7 @@ for file in project_files:
     # Open and write new file contents into new path
     open(new_file_path, "w").write(new_file_contents)
 
-    print("done!")
+    # Print info to command line
+    print("  Compiled " + file + " at " + new_file_path + ": " + str(datetime.datetime.now()))
+
+print("Site compiled at " + result_directory + ": " + str(datetime.datetime.now()))
