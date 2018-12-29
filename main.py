@@ -51,36 +51,29 @@ for file in project_files:
 
     # Loop through embedded Python code
     for embedded_code_index in range(len(split_file_contents)):
+        # Check if index refers to embedded Python code or valid code; only run if current index is embedded code
         if(embedded_code_index%2 == 1):
             embedded_code = split_file_contents[embedded_code_index]
 
+            # Variable for result
             global executed_embedded_code
             executed_embedded_code = ""
 
+            # Display function; equivalent to print, although puts result into file
             def display(text):
                 global executed_embedded_code
                 if (executed_embedded_code != ""):
                     executed_embedded_code += "\n"
                 executed_embedded_code += str(text)
 
+            # Execute embedded code
             exec(embedded_code)
 
+            # Replace embedded code with executed embedded code
             split_file_contents[embedded_code_index] = executed_embedded_code
 
+            # Delete useless variables
             del executed_embedded_code
 
-    print ''.join(split_file_contents)
-
-# === Just some code I'm saving for later :) ===
-# printVal = ""
-# def display(text):
-#     global printVal
-#     if(printVal != ""):
-#         printVal += "\n"
-#     printVal += str(text)
-#
-# exec('''
-# global printVal
-# printVal = ""
-# ''')
-# print printVal
+    new_file_contents = ''.join(split_file_contents)
+    print file
