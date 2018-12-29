@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<meta charset="utf-8">
+	<title><=display(site["title"])=></title>
+	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-<h1>Just numbers 0 - 10 :)</h1>
+	<nav>
+		<h1><=display(site["title"])=></h1>
+	</nav>
+	<div class="container">
 <=
-for i in range(10):
-	display(i)
+for post in site["blog_posts"]:
+	display("<div>")
+	display("<h1>" + post["title"] + "</h1>")
+	display("<p class='date'>Posted on " + post["date"] + "</p>")
+	display("<p>" + post["content"] + "</p>")
+	display("</div>")
 =>
-
-<h1>Just a bunch of primes</h1>
-<=
-def is_prime(n):
-	is_prime = True
-	for i in range(2,n):
-		if(n%i==0):
-			is_prime = False
-	return is_prime
-for number in range(50):
-	if(is_prime(number)):
-		display(number)
-=>
+	</div>
 </body>
 </html>

@@ -27,6 +27,9 @@ if(project_directory[-1] != "/"):
 # Remove result/ directory if exists
 shutil.rmtree(project_directory + "result/", ignore_errors=True)
 
+# Get config (config.py) file contents
+config_contents = open(project_directory + "config.py", "r").read()
+
 # Get all files in project directory
 project_files = []
 
@@ -36,7 +39,8 @@ for dirname, dirnames, filenames in os.walk(project_directory):
         for dir in dirname.split(os.path.sep)[1:]+[filename]:
             if(dir[0] == "."):
                 valid_dir = False
-        if(valid_dir):
+        # Ignore config.py as a project file
+        if(valid_dir and not (dirname == project_directory and filename == "config.py")):
             project_files.append(os.path.join(dirname, filename))
 
 # Create result/ directory in project directory
@@ -87,7 +91,7 @@ for file in project_files:
                 executed_embedded_code += str(text)
 
             # Execute embedded code
-            exec(embedded_code)
+            exec(config_contents + "\n" + embedded_code)
 
             # Replace embedded code with executed embedded code
             split_file_contents[embedded_code_index] = executed_embedded_code
