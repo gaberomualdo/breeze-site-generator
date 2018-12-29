@@ -6,6 +6,7 @@
 # Imports
 import sys
 import os
+import shutil
 
 # Get project directory file using command line argument
 try:
@@ -19,6 +20,9 @@ except:
 if(project_directory[-1] != "/"):
     project_directory += "/"
 
+# Remove result/ directory if exists
+shutil.rmtree(project_directory + "result/", ignore_errors=True)
+
 # Get all files in project directory
 project_files = []
 
@@ -30,6 +34,18 @@ for dirname, dirnames, filenames in os.walk(project_directory):
                 valid_dir = False
         if(valid_dir):
             project_files.append(os.path.join(dirname, filename))
+
+# Create result/ directory in project directory
+result_directory = project_directory + "result"
+if not os.path.exists(result_directory):
+    os.makedirs(result_directory)
+
+# Get all sub-directories in project directory and create copies in result/
+for directory in ([x[0] for x in os.walk(project_directory)][1:]):
+    new_directory = project_directory + "result/" + directory[len(project_directory):]
+    if (not os.path.exists(new_directory)) and directory != result_directory:
+        os.makedirs(new_directory)
+        print directory
 
 # Loop through project files and split into valid code and embedded Python code
 for file in project_files:
@@ -75,5 +91,16 @@ for file in project_files:
             # Delete useless variables
             del executed_embedded_code
 
+    # Put compiled new file contents into file
     new_file_contents = ''.join(split_file_contents)
-    print file
+
+    # Get compiled file new path by adding the result/ folder after the project directory folder
+    new_file_path = project_directory + "result/" + file[len(project_directory):]
+
+    # Create compiled file via touch command
+    open(new_file_path, 'a').close()
+
+    # Open and write new file contents into new path
+    open(new_file_path, "w").write(new_file_contents)
+
+    print("done!")
