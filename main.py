@@ -1,5 +1,5 @@
 # (c) Breeze Static-Site Generator 2018
-# Made by Fred Adams (xtrp)
+# Made by Gabriel Romualdo (xtrp)
 # Check out Breeze on GitHub at https://github.com/xtrp/breeze
 # Check out the Breeze official website at https://xtrp.github.io/breeze/
 
